@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,25 +28,34 @@ import java.util.UUID;
 public class ImageService {
     private final AmazonS3 amazonS3;
     private final AwsS3Properties properties;
+    private final ImageRepository imageRepository;
 
-    public String postImage(MultipartFile file, String bucketName) {
+    public PostResponseBody postImage(MultipartFile file, String bucketName) {
         if (bucketName == null) bucketName = properties.getBucketName();
 
         String fileName = makeFileName(file.getOriginalFilename());
 
         ObjectMetadata objectMetadata = buildObjectMetadata(file, fileName);
 
+        PostResponseBody responseBody = new PostResponseBody();
         try {
             amazonS3.putObject(new PutObjectRequest(
                     bucketName,
                     fileName,
                     file.getInputStream(),
                     objectMetadata));
+
+            Image entity = new Image();
+            entity.setFileName(fileName);
+            imageRepository.save(entity);
+            responseBody.setId(entity.getId());
+            responseBody.setFileName(fileName);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return fileName;
+        return responseBody;
     }
 
     private String makeFileName(String originalFileName) {
@@ -136,8 +146,10 @@ public class ImageService {
         return "\"" + new String(displayFileName.getBytes(StandardCharsets.UTF_8), "8859_1") + "\"";
     }
 
+    @Transactional
     public void deleteImage(String bucketName, String fileName) {
         if (bucketName == null) bucketName = properties.getBucketName();
+        imageRepository.deleteByFileName(fileName);
         amazonS3.deleteObject(bucketName, fileName);
     }
 

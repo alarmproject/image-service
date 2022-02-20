@@ -2,3 +2,23 @@ aws:
   access-key: AKIAYKYQWBCPCFVW3T6N
   secret-key: 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
   bucket-name: alarmproject
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://alarm-project.cl4rharqalth.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    username: root
+    password: 12345678
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace #show parameter binding
+      SQL: DEBUG

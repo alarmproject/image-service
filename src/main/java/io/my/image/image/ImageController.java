@@ -15,7 +15,7 @@ public class ImageController {
     private final ImageService imageService;
 
     @PostMapping
-    public BaseResponse<String> postImage(
+    public BaseResponse<PostResponseBody> postImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam(name = "bucketName", required = false) String bucketName) {
 
