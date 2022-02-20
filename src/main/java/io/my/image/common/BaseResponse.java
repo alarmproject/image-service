@@ -1,4 +1,4 @@
-package io.my.image;
+package io.my.image.common;
 
 import lombok.Getter;
 import lombok.Setter;

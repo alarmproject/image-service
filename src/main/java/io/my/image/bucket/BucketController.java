@@ -1,5 +1,6 @@
-package io.my.image;
+package io.my.image.bucket;
 
+import io.my.image.common.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

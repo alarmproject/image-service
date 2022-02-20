@@ -1,4 +1,4 @@
-package io.my.image;
+package io.my.image.bucket;
 
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
