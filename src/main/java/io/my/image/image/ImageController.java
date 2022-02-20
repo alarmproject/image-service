@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/image")
 public class ImageController {
     private final ImageService imageService;
 
