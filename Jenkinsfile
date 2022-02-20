@@ -112,12 +112,12 @@ pipeline {
                         verbose: true,
                         transfers: [
                             sshTransfer(
-                                sourceFiles: "docker-compose-alarm-image.yml",
+                                sourceFiles: "docker-compose-image.yml",
                             ),
                             sshTransfer(execCommand: "docker login -u rlabotjd -p 251fcc1f-8ec9-4b0a-b440-c97a95a68e9e"),
                             sshTransfer(execCommand: "docker pull rlabotjd/mysend:latest-alarm-image"),
                             sshTransfer(execCommand: "docker service rm alarm_alarm-image"),
-                            sshTransfer(execCommand: "docker stack deploy --compose-file /home/ec2-user/alarm-service/docker-compose-alarm-image.yml alarm"),
+                            sshTransfer(execCommand: "docker stack deploy --compose-file /home/ec2-user/alarm-service/docker-compose-image.yml alarm"),
                             sshTransfer(execCommand: "docker image prune -f")
                         ]
                     )
