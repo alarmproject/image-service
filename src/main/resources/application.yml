@@ -6,9 +6,9 @@ aws:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://alarm-project.cl4rharqalth.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
     username: root
-    password: 12345678
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: none
